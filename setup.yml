@@ -7,10 +7,10 @@
       apt:
         update_cache: yes
 
-    - name: Install basic packages
+    - name: Purge basic packages
       apt:
         name:
           - curl
           - vim
           - git
-        state: present
+        state: purged
