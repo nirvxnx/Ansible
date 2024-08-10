@@ -13,4 +13,4 @@
           - curl
           - vim
           - git
-        state: purged
+        state: absent
