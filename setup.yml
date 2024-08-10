@@ -7,10 +7,38 @@
       apt:
         update_cache: yes
 
-    - name: Purge basic packages
+    - name: Install basic packages
       apt:
         name:
           - curl
           - vim
           - git
-        state: absent
+        state: present
+
+- name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Configure Nginx
+      copy:
+        content: |
+          server {
+              listen 80;
+              server_name example.com;
+              location / {
+                  root /var/www/html;
+                  index index.html index.htm;
+              }
+          }
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload Nginx
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
