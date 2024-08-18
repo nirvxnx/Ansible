@@ -9,8 +9,23 @@ server1 ansible_host=34.134.216.235 nginx_config_template=nginx_server1.conf.j2 
           │     'YAML rocks!' 🚀                          │
           │                                               │
           └───────────────────────────────────────────────┘"
-server2 ansible_host=35.203.123.20 nginx_config_template=nginx_server2.conf.j2 index_content="Welcome to Server 2"
-server3 ansible_host=35.203.107.132 nginx_config_template=nginx_server3.conf.j2 index_content="Welcome to Server 3"
+server2 ansible_host=35.203.123.20 nginx_config_template=nginx_server2.conf.j2 index_content="          ┌───────────────────────────────────────────────┐
+          │                                               │
+          │  🚀 Setup Complete! You're good to go! 🚀    │
+          │                                               │
+          │  Time to unleash your awesome skills and      │
+          │  conquer the world. 🌍                        │
+          │                                               │
+          └───────────────────────────────────────────────┘"
+server3 ansible_host=35.203.107.132 nginx_config_template=nginx_server3.conf.j2 index_content=" ┌───────────────────────────────────────────────┐
+          │                                               │
+          │     🌟 Welcome to the Legendary Setup! 🌟     │
+          │                                               │
+          │   Get ready for an adventure in automation!   │
+          │   Ansible is here to save the day and make    │
+          │   your life easier. Let's rock and roll! 🤘   │
+          │                                               │
+          └───────────────────────────────────────────────┘"
 
 
 [all:vars]
