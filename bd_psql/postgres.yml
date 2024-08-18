@@ -1,0 +1,32 @@
+---
+- name: Установка и настройка PostgreSQL на Debian
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Обновить кеш apt
+      apt:
+        update_cache: yes
+
+    - name: Установить PostgreSQL
+      apt:
+        name: postgresql
+        state: present
+
+    - name: Запустить и включить PostgreSQL
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Создать базу данных
+      become_user: postgres
+      postgresql_db:
+        name: mydatabase
+
+    - name: Создать пользователя для базы данных
+      become_user: postgres
+      postgresql_user:
+        name: myuser
+        password: mypassword
+        priv: "mydatabase:ALL"
