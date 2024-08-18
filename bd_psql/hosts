@@ -1,7 +1,7 @@
 [servers]
-server1 ansible_host=34.134.216.235 
-server2 ansible_host=35.203.123.20 
-server3 ansible_host=35.203.107.132
+server1
+server2
+server3
 
 [all:vars]
 ansible_user=student
