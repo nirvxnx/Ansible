@@ -1,5 +1,14 @@
 [servers]
-server1 ansible_host=34.134.216.235 nginx_config_template=nginx_server1.conf.j2 index_content="Welcome to Server 1"
+server1 ansible_host=34.134.216.235 nginx_config_template=nginx_server1.conf.j2 index_content="┌───────────────────────────────────────────────┐
+          │                                               │
+          │     🎉 Welcome to the Ultimate Setup! 🎉     │
+          │                                               │
+          │     Sit back, relax, and let Ansible do       │
+          │     its magic. We'll have everything up       │
+          │     and running before you can say            │
+          │     'YAML rocks!' 🚀                          │
+          │                                               │
+          └───────────────────────────────────────────────┘"
 server2 ansible_host=35.203.123.20 nginx_config_template=nginx_server2.conf.j2 index_content="Welcome to Server 2"
 server3 ansible_host=35.203.107.132 nginx_config_template=nginx_server3.conf.j2 index_content="Welcome to Server 3"
 
