@@ -16,5 +16,5 @@
 
     - name: Clone Git repository
       git:
-        repo: https://github.com/your-repo.git
-        dest: /path/to/destination
+        repo: https://github.com/nirvxnx/my_docker_project.git
+        dest: /root
