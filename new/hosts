@@ -1,7 +1,7 @@
 [servers]
-server1 147.45.41.53
-server2 147.45.71.93
-server3 147.45.41.72
+147.45.41.53
+147.45.71.93
+147.45.41.72
 
 [all:vars]
 ansible_user=root
