@@ -10,7 +10,7 @@
 
     - name: Copy test file to remote host
       copy:
-        src: /path/to/local/test-file.txt
+        src: /tmp/test-file.txt
         dest: /tmp/test-file.txt
         mode: '0644'
 
