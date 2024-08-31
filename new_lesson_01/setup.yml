@@ -8,7 +8,7 @@ nginx_setup:
       password: "testpassword"  # В реальном случае, лучше зашифровать этот пароль
 
   nginx_config:
-    server_name: "your_domain_or_ip"  # Доменное имя или IP сервера
+    server_name: "147.45.41.53"  # Доменное имя или IP сервера
     auth_location: "/secure"  # Директория, защищенная аутентификацией
     auth_message: "Restricted Content"  # Сообщение в окне аутентификации
 
