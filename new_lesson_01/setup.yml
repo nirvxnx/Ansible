@@ -1,6 +1,6 @@
 ---
 - name: Setup Nginx with Basic Authentication
-  hosts: 147.45.71.93  # Замените на вашу группу хостов или 'localhost' для локальной настройки
+  hosts: 147.45.41.72  # Замените на вашу группу хостов или 'localhost' для локальной настройки
   become: yes  # Выполнение с привилегиями root
 
   vars:
