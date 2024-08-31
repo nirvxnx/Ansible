@@ -22,9 +22,8 @@
       args:
         creates: "{{ htpasswd_file }}"
 
-- name: Copy default file nginx configuration.
-      copy:
-        content: "{{ default }}"
+    - name: Copy default file nginx configuration.
+      copy:  
         src: files/default
         dest: /etc/nginx/sites-available/default
         owner: root
