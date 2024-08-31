@@ -1,37 +1,40 @@
 ---
-# Конфигурация для настройки Nginx с базовой аутентификацией
+- name: Setup Nginx with Basic Authentication
+  hosts: 147.45.41.53  # Замените на вашу группу хостов или 'localhost' для локальной настройки
+  become: yes  # Выполнение с привилегиями root
 
-nginx_setup:
-  install_nginx: true  # Устанавливаем Nginx, если он еще не установлен
-  htpasswd_file: /etc/nginx/.htpasswd  # Путь к файлу .htpasswd
-  htpasswd_users:
-    - username: "testuser"
-      password: "testpassword"  # В реальном случае, лучше зашифровать этот пароль
+  vars:
+    htpasswd_file: /etc/nginx/.htpasswd
+    nginx_user: "testuser"
+    nginx_password: "testpassword"  # В реальном сценарии лучше зашифровать этот пароль
 
-  nginx_config:
-    server_name: "147.45.41.53"  # Доменное имя или IP сервера
-    auth_location: "/secure"  # Директория, защищенная аутентификацией
-    auth_message: "Restricted Content"  # Сообщение в окне аутентификации
+  tasks:
+    - name: Install necessary packages
+      apt:
+        name:
+          - nginx
+          - apache2-utils
+        state: present
+      update_cache: yes
 
-# Команды для выполнения установки и настройки
+    - name: Create htpasswd file with user and password
+      command: htpasswd -cb {{ htpasswd_file }} {{ nginx_user }} {{ nginx_password }}
+      args:
+        creates: "{{ htpasswd_file }}"
 
-commands:
-  - Install Nginx: |
-      sudo apt update
-      sudo apt install nginx apache2-utils -y
-  - Create htpasswd file: |
-      sudo htpasswd -cb {{ htpasswd_file }} {{ htpasswd_users[0].username }} {{ htpasswd_users[0].password }}
-  - Configure Nginx: |
-      echo '
-      server {
-          listen 80;
-          server_name {{ nginx_config.server_name }};
-          
-          location {{ nginx_config.auth_location }} {
-              auth_basic "{{ nginx_config.auth_message }}";
+    - name: Configure Nginx for basic authentication
+      blockinfile:
+        path: /etc/nginx/sites-available/default
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        block: |
+          location /secure {
+              auth_basic "Restricted Content";
               auth_basic_user_file {{ htpasswd_file }};
-              try_files $uri $uri/ =404;
           }
-      }' | sudo tee /etc/nginx/sites-available/default > /dev/null
-  - Reload Nginx: |
-      sudo systemctl reload nginx
+      notify: Reload Nginx
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
