@@ -22,16 +22,15 @@
       args:
         creates: "{{ htpasswd_file }}"
 
-    - name: Configure Nginx for basic authentication
-      blockinfile:
-        path: /etc/nginx/sites-available/default
-        marker: "# {mark} ANSIBLE MANAGED BLOCK"
-        block: |
-          location /secure {
-              auth_basic "Restricted Content";
-              auth_basic_user_file {{ htpasswd_file }};
-          }
-      notify: Reload Nginx
+- name: Copy default file nginx configuration.
+      copy:
+        content: "{{ default }}"
+        src: files/default
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: '0644'
+       notify: Reload Nginx
 
   handlers:
     - name: Reload Nginx
