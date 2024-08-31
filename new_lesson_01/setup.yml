@@ -6,8 +6,9 @@
   vars:
     htpasswd_file: /etc/nginx/.htpasswd
     nginx_user: "testuser"
-    nginx_password: "testpassword"  # В реальном сценарии лучше зашифровать этот пароль
-
+  vars_files:
+    - secrets.yml
+  
   tasks:
     - name: Update apt cache and install necessary packages
       apt:
