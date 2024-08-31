@@ -29,7 +29,7 @@
         owner: root
         group: root
         mode: '0644'
-       notify: Reload Nginx
+      notify: Reload Nginx
 
   handlers:
     - name: Reload Nginx
