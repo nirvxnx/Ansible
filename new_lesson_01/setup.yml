@@ -9,13 +9,13 @@
     nginx_password: "testpassword"  # В реальном сценарии лучше зашифровать этот пароль
 
   tasks:
-    - name: Install necessary packages
+    - name: Update apt cache and install necessary packages
       apt:
+        update_cache: yes
         name:
           - nginx
           - apache2-utils
         state: present
-      update_cache: yes
 
     - name: Create htpasswd file with user and password
       command: htpasswd -cb {{ htpasswd_file }} {{ nginx_user }} {{ nginx_password }}
