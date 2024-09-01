@@ -1,2 +1,6 @@
 ---
-# defaults file for postgresql
+# defaults file for install_postgresql
+postgresql_version: "14"
+postgresql_packages:
+  - "postgresql-{{ postgresql_version }}"
+  - "postgresql-contrib-{{ postgresql_version }}"
