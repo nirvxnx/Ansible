@@ -1,4 +1,4 @@
 ---
-- hosts: <вставить>
+- hosts: all
   roles:
     - install_postgresql
