@@ -1,5 +1,5 @@
 ---
-- hosts: target_servers
+- hosts: servers
   become: yes
   roles:
     - postgresql
