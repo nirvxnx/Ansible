@@ -1,0 +1,4 @@
+---
+# vars file for install_postgresql
+postgresql_data_directory: "/var/lib/postgresql/{{ postgresql_version }}/main"
+postgresql_listen_address: "localhost"
