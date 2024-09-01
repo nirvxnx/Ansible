@@ -2,4 +2,4 @@
 - hosts: target_servers
   become: yes
   roles:
-    - install_postgresql
+    - postgresql
