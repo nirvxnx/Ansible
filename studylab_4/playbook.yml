@@ -1,0 +1,9 @@
+---
+- name: Запуск ролей на серверах
+  hosts: all
+  become: true
+
+  roles:
+    - nginx
+    - postgre
+    

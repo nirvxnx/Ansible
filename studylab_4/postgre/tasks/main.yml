@@ -1,0 +1,35 @@
+---
+# tasks file for postgre
+- name: Install PostgreSQL
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  loop:
+    - postgresql
+    - postgresql-contrib
+    - acl
+    - python3-psycopg2
+    - libpq-dev
+
+- name: Start PostgreSQL service
+  service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: Create PostgreSQL database
+  become_user: postgres
+  postgresql_db:
+    name: "{{ postgres_db }}"
+    state: present
+
+- name: Create PostgreSQL user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ postgres_username }}"
+    password: "{{ postgres_password }}"
+    db: "{{ postgres_db }}"
+    priv: "ALL"
+    state: present

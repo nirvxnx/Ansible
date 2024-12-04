@@ -1,0 +1,16 @@
+---
+- name: Check services on all servers
+  hosts: all
+  become: false  # Не требуется повышенных привилегий для выполнения HTTP-запросов
+  tasks:
+    - name: Check if website is accessible
+      uri:
+        url: "http://{{ ansible_host }}"
+        return_content: false  # Не нужно выводить контент
+        status_code: 200  # Проверяем успешный HTTP-ответ
+      register: website_status  # Сохраняем результат проверки
+      when: "'webservers' in group_names"
+
+    - name: Debug website status
+      debug:
+        var: website_status

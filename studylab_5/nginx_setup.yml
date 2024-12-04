@@ -1,0 +1,23 @@
+---
+- name: Установка и настройка Nginx
+  hosts: webservers
+  become: true
+  vars_files:
+    - nginx_vars.yml
+
+  tasks:
+    - name: Установить Nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Показать переменные
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - tls_dir: /etc/nginx/ssl/
+        - key_file: nginx.key
+        - cert_file: nginx.crt
+        - conf_file: /etc/nginx/sites-available/default
+        - server_name: localhost
+

@@ -1,0 +1,40 @@
+---
+- name: Install and configure web server
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+- name: Install and configure database server
+  hosts: dbservers
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Delete MySQL
+      apt:
+        name: mariadb-server
+        state: absent
+        update_cache: yes
+
+    - name: Install Postgres
+      apt:
+        name: postgresql
+        state: present
+        update_cache: yes
+
+- name: Gather system information
+  hosts: local
+  tasks:
+    - name: Print system information
+      command: uname -a
+      register: system_info
+
+    - debug:
+        var: system_info.stdout

@@ -1,0 +1,47 @@
+---
+- name: Create PostgreSQL database and user
+  hosts: dbservers
+  gather_facts: true
+  become: true
+  vars:
+    db_name: "my_database"
+    db_user: "my_user"
+    db_password: "my_secure_password"
+    root_password: "your_root_password"
+
+  tasks:
+
+    - name: Install PostgreSQL
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: true
+      loop:
+        - postgresql
+        - postgresql-contrib
+        - acl
+        - libpq-dev
+
+    - name: Ensure PostgreSql service is running
+      service:
+        name: postgresql
+        state: started
+
+    - name: Create a new database
+      postgresql_db:
+        name: "{{ db_name }}"
+        state: present
+        login_user: postgres
+        login_password: "{{ root_password }}"
+
+
+    - name: Create user and grant privileges
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+        priv: ALL
+        state: present
+        login_user: postgres
+        login_password: "{{ root_password }}"

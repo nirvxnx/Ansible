@@ -1,0 +1,15 @@
+---
+- name: Выполнить команду whoami
+  hosts: localhost
+  tasks:
+    - name: Выполнить команду whoami
+      command: whoami
+      register: login
+
+    - name: Показать результат
+      debug:
+        msg:
+          - "Пользователь: {{ login.stdout }}"
+          - "Код завершения: {{ login.rc }}" 
+          - "Время выполнения: {{ login.delta }}"
+

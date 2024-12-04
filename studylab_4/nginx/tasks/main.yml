@@ -1,0 +1,20 @@
+---
+# tasks file for nginx
+- name: install ngnix
+  apt:
+    name: nginx
+    state: latest
+    update_cache: true
+
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: copy conf nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: restart nginx

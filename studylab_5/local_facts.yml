@@ -1,0 +1,32 @@
+- hosts: all
+  gather_facts: true
+  tasks:
+    # 1. Показать локальные факты
+    - name: Показать локальные факты
+      debug:
+        var: ansible_local
+
+    # 2. Установить переменные из локальных фактов
+    - name: Установить переменные из секции [book]
+      set_fact:
+        book_title: "{{ ansible_local['book']['title'] }}"
+        book_authors: "{{ ansible_local['book']['authors'] }}"
+        book_publisher: "{{ ansible_local['book']['publisher'] }}"
+
+    # 3. Показать обработанные переменные
+    - name: Показать информацию о книге
+      debug:
+        msg:
+          - "Название книги: {{ book_title }}"
+          - "Авторы: {{ book_authors }}"
+          - "Издатель: {{ book_publisher }}"
+
+    # 4. Преобразовать список авторов
+    - name: Разделить список авторов
+      set_fact:
+        authors_list: "{{ book_authors.split(', ') }}"
+
+    # 5. Показать список авторов
+    - name: Список авторов
+      debug:
+        var: authors_list

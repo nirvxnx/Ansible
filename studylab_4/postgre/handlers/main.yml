@@ -1,0 +1,6 @@
+---
+# handlers file for postgre
+- name: restard postgresql
+  service:
+    name: postgresql
+    state: reload

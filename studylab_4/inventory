@@ -1,0 +1,18 @@
+[webservers]
+host1 ansible_host=212.113.106.246 ansible_user=root
+
+[dbservers]
+host2 ansible_host=212.113.106.245 ansible_user=root
+
+[local]
+localhost ansible_connection=local ansible_user=reblast
+
+[all:vars]
+ansible_user=reblast
+host1 ansible_host=212.113.106.246 ansible_user=root ansible_ssh_private_key_file=/path/to/your/private/key
+host2 ansible_host=212.113.106.245 ansible_user=root ansible_ssh_private_key_file=/path/to/your/private/key
+
+
+[production:children]
+webservers
+dbservers
