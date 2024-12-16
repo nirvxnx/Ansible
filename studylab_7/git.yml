@@ -1,0 +1,8 @@
+- name: Устанавить Гит на удаленные сервера
+  hosts: web
+  tasks:
+    - name: установить все пакеты гит
+      apt:
+        name: git-all1
+        state: present
+        update_cache: yes

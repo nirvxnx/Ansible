@@ -1,0 +1,11 @@
+---
+- name: копировать директорию
+  hosts: web
+  gather_facts: false
+
+  tasks:
+    - name: Копировать директорию на сервер
+      copy:
+        src: .
+        dest: /tmp/studylab_13
+      tags: copy

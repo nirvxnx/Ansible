@@ -1,0 +1,90 @@
+---
+- name: Сборка и запуск Docker-контейнеров NGINX и Ghost
+  hosts: web
+  gather_facts: false
+
+  tasks:
+    - name: Install pip
+      apt: 
+        name: python3-pip
+        state: present
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+    
+    - name: Копировать директорию на сервер
+      copy:
+        src: .
+        dest: /tmp/studylab_13
+      tags: copy
+
+    - name: Создать Docker-сеть ghost_network
+      docker_network:
+        name: ghost_network
+        state: present
+
+    - name: Проверить существование сети ghost_network
+      command: docker network inspect ghost_network
+      register: network_status
+      ignore_errors: false
+
+
+
+    # 1. Сборка Docker-образа NGINX
+    - name: Сборка Docker-образа NGINX с проксированием на Ghost
+      docker_image:
+        build:
+          path: /tmp/studylab_13
+        name: nginx-ghost
+        tag: latest
+        source: build
+        state: present
+      tags:
+        - build
+
+    # 2. Запуск контейнера Ghost
+    - name: Запуск контейнера Ghost
+      docker_container:
+        name: ghost
+        image: ghost:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "2368:2368"
+        networks:
+          - name: ghost_network  
+      tags:
+        - deploy
+
+    # 3. Запуск контейнера NGINX
+    - name: Запуск контейнера NGINX
+      docker_container:
+        name: nginx
+        image: nginx-ghost:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
+          - "443:443"
+        networks:
+          - name: ghost_network
+      tags:
+        - deploy

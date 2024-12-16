@@ -1,0 +1,7 @@
+---
+
+- name: Операции на хостах
+  hosts: staging:&database
+  tasks:
+    - name: Пинг для всех хостов
+      ping:

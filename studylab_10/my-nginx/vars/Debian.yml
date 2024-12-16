@@ -1,0 +1,8 @@
+nginx_package: nginx
+nginx_service: nginx
+nginx_conf_path: /etc/nginx/nginx.conf
+nginx_user: nginx
+nginx_group: nginx
+nginx_logs_path: /var/log/nginx
+nginx_root: /usr/share/nginx/html
+

@@ -1,0 +1,14 @@
+- name: Структура данных
+  hosts: web
+
+  vars:
+    virtual_hosts:
+      - { name: "site1", port: 8080, document_root: "/var/www/site1" }
+      - { name: "site2", port: 9090, document_root: "/var/www/site2" }
+      - { name: "site3", port: 9096, document_root: "/var/www/site3" }
+  tasks:
+    - name: Настройка виртуальных хостов
+      template:
+        src: vhost.j2
+        dest: /etc/apache2/sites-available/{{ item.name }}.conf
+      with_items: "{{ virtual_hosts }}"

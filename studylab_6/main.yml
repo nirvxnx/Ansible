@@ -1,0 +1,7 @@
+- name: Настройка веб-сервера с переменными из инвентаря
+  hosts: web
+  tasks:
+    - name: Конфигурация Apache
+      template:
+        src: apache.j2
+        dest: /etc/apache2/sites-available/000-default.conf

@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  ghost:
+    image: ghost:latest
+    container_name: ghost
+    restart: always
+    environment:
+      NODE_ENV: production
+      url: http://localhost:2368
+      database__client: sqlite3
+      database__connection__filename: /var/lib/ghost/content/data/ghost.db
+    volumes:
+      - ghost-data:/var/lib/ghost/content
+    networks:
+      - ghost_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./ghost.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - ghost
+    networks:
+      - ghost_network
+
+volumes:
+  ghost-data:
+
+networks:
+  ghost_network:
+    driver: bridge

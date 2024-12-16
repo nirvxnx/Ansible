@@ -1,0 +1,46 @@
+---
+- name: Развертывание Ghost и NGINX с Docker Compose
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Установить Docker и Docker Compose
+      apt:
+        name: 
+          - docker.io
+          - docker-compose
+        state: present
+        update_cache: yes
+
+    - name: Запустить Docker сервис
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Создать директорию для проекта
+      file:
+        path: /opt/ghost_nginx
+        state: directory
+        mode: '0755'
+
+    - name: Копировать файлы Docker Compose и конфигурацию NGINX
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - { src: "./docker-compose.yml", dest: "/opt/ghost_nginx/docker-compose.yml" }
+        - { src: "./ghost.conf", dest: "/opt/ghost_nginx/ghost.conf" }
+
+    - name: Запустить Docker Compose
+      command: docker-compose up -d
+      args:
+        chdir: /opt/ghost_nginx
+
+    - name: Проверить запущенные контейнеры
+      command: docker ps
+      register: docker_status
+
+    - name: Вывести статус контейнеров
+      debug:
+        var: docker_status.stdout

@@ -1,0 +1,8 @@
+[staging]
+server1 ansible_host=85.192.42.81 ansible_user=root
+
+[database]
+server2 ansible_host=85.192.27.131 ansible_user=root
+
+[web]
+server3 ansible_host=94.228.169.162 ansible_user=root

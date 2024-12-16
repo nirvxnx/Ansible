@@ -1,0 +1,6 @@
+- name: Запуск шаблона с использованием модуля template
+  hosts: web
+  tasks:
+
+    - name:
+    

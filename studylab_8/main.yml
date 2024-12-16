@@ -1,0 +1,29 @@
+- name: Установка пакетов на сервера
+  hosts: web
+  vars:
+    port: 8084
+  tasks:
+
+    - name: Установить пакеты
+      apt:
+        name:
+        - nginx
+        - git
+        state: present
+      tags:
+        - install
+  
+    - name: Копировать конфигурационный файл
+      template:
+        src: ./nginx.j2
+        dest: /etc/nginx/nginx.conf
+      tags:
+        - config
+  
+    - name: Перезапустить Nginx
+      service:
+        name: nginx
+        state: restarted
+      tags:
+        - restart
+  

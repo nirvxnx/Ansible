@@ -1,0 +1,7 @@
+- name: Загрузка бинарного файла Goss
+  hosts: all
+  serial: 3
+  max_fail_percentage: 10
+  tasks:
+    - name: Проверка пинга
+      ping:

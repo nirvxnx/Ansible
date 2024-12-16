@@ -1,0 +1,12 @@
+<VirtualHost *:{{ item.port }}>
+    ServerName {{ item.name }}
+    DocumentRoot {{ item.document_root }}
+
+    <Directory "{{ item.document_root }}">
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ item.name }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ item.name }}_access.log combined
+</VirtualHost>

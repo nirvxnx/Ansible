@@ -1,0 +1,6 @@
+- name: Получение системной информации
+  hosts: all
+  tasks:
+    - name: Вывести информацию о хосте
+      debug:
+        var: ansible_facts
